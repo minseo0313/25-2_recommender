@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-65@53eqg4oim=54g9n@cc$=xb(yq@qwjgxcp!jhvp!%x9g%l&0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,11 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 추가
+    'rest_framework',
+    'corsheaders',  #INSTALLED_APPS에 corsheaders 추가
+    # 나중에 앱 만들면 여기 등록: 'api',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',       # MIDDLEWARE에 corsheaders 추가
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,8 +82,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'db_postgres'),
+        'USER': os.environ.get('DB_USER', 'user_postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'pwd_postgres'),
+        'HOST': os.environ.get('DB_HOST', 'db'),
+        'PORT': '5432'
     }
 }
 
@@ -121,3 +132,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CORS 설정 (개발용)
+CORS_ALLOW_ALL_ORIGINS = True  # 모든 도메인 허용 (개발단계)
+# 운영 단계에서는 아래처럼 특정 도메인만 허용:
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+# ]
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost:3000",
+# ]
