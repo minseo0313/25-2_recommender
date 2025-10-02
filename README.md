@@ -53,6 +53,15 @@ sudo apt update
 sudo apt install -y postgresql postgresql-contrib
 ```
 
+### PostgreSQL + pgvector 설치 및 실행 확인
+```bash
+# PostgreSQL + pgvector 설치 (WSL 터미널)
+sudo apt install -y postgresql postgresql-contrib postgresql-16-pgvector
+
+# PostgreSQL 서비스 상태 확인
+sudo service postgresql status
+
+
 #### 데이터베이스 및 사용자 생성
 ```bash
 # PostgreSQL 접속
