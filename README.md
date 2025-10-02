@@ -60,12 +60,13 @@ sudo apt install -y postgresql postgresql-contrib postgresql-16-pgvector
 
 # PostgreSQL 서비스 상태 확인
 sudo service postgresql status
-
+```
 
 #### 데이터베이스 및 사용자 생성
 ```bash
 # PostgreSQL 접속
 sudo -u postgres psql
+
 
 # 데이터베이스 사용자 및 데이터베이스 생성
 CREATE ROLE recommender_user WITH LOGIN PASSWORD 'recommender_pass';
